@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Streamer del Torneo CS2</title>
+    <style>
+        body { background: #1a1a1a; color: white; font-family: sans-serif; text-align: center; padding: 50px; }
+        .btn { background: #de4c4c; border: none; padding: 20px 40px; color: white; font-size: 20px; cursor: pointer; border-radius: 10px; transition: 0.3s; }
+        .btn:hover { background: #ff5e5e; transform: scale(1.05); }
+        input { padding: 10px; border-radius: 5px; border: none; margin-bottom: 20px; width: 250px; }
+    </style>
+</head>
+<body>
+    <h1>🎥 Panel de Transmisión del Torneo</h1>
+    <p>Introduce tu nombre/ID y dale al botón para empezar a compartir tu juego.</p>
+    
+    <input type="text" id="username" placeholder="Ej: Player1_Terrorist"><br>
+    
+    <button class="btn" onclick="empezarStream()">COMPARTIR PANTALLA / JUEGO</button>
+
+    <script>  
+        function empezarStream() {
+            const user = document.getElementById('username').value || "JugadorAnonimo";
+            // Esta URL redirige a VDO.Ninja con parámetros de alto rendimiento
+            // push: tu nombre, autostart: inicia solo, bitratenew: calidad estable
+            const url = `https://vdo.ninja/?push=${user}&autostart&bitratenew=4000&quality=2&speed=1&clean&label=${user}`;
+            
+            window.location.href = url;
+        }
+    </script>  
+</body>
+</html>
