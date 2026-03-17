@@ -2,31 +2,96 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Streamer del Torneo CS2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Transmisión - Torneo CS2</title>
     <style>
-        body { background: #1a1a1a; color: white; font-family: sans-serif; text-align: center; padding: 50px; }
-        .btn { background: #de4c4c; border: none; padding: 20px 40px; color: white; font-size: 20px; cursor: pointer; border-radius: 10px; transition: 0.3s; }
-        .btn:hover { background: #ff5e5e; transform: scale(1.05); }
-        input { padding: 10px; border-radius: 5px; border: none; margin-bottom: 20px; width: 250px; }
+        body {
+            background-color: #0f1216;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #1c2128;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-align: center;
+            border: 1px solid #30363d;
+        }
+        h1 { color: #de4c4c; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; }
+        p { color: #8b949e; margin-bottom: 30px; }
+        .input-group { margin-bottom: 20px; }
+        input {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            padding: 12px;
+            color: white;
+            border-radius: 5px;
+            width: 80%;
+            font-size: 16px;
+            outline: none;
+        }
+        input:focus { border-color: #de4c4c; }
+        .btn {
+            background: #de4c4c;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+        .btn:hover { background: #f85149; transform: translateY(-2px); }
+        .footer { margin-top: 20px; font-size: 12px; color: #484f58; }
     </style>
 </head>
 <body>
-    <h1>🎥 Panel de Transmisión del Torneo</h1>
-    <p>Introduce tu nombre/ID y dale al botón para empezar a compartir tu juego.</p>
-    
-    <input type="text" id="username" placeholder="Ej: Player1_Terrorist"><br>
-    
-    <button class="btn" onclick="empezarStream()">COMPARTIR PANTALLA / JUEGO</button>
 
-    <script>  
-        function empezarStream() {
-            const user = document.getElementById('username').value || "JugadorAnonimo";
-            // Esta URL redirige a VDO.Ninja con parámetros de alto rendimiento
-            // push: tu nombre, autostart: inicia solo, bitratenew: calidad estable
-            const url = `https://vdo.ninja/?push=${user}&autostart&bitratenew=4000&quality=2&speed=1&clean&label=${user}`;
+    <div class="container">
+        <h1>Transmisión Oficial</h1>
+        <p>Selecciona tu nombre de jugador para el 5 vs 5</p>
+        
+        <div class="input-group">
+            <input type="text" id="playerName" placeholder="Tu nombre en el juego...">
+        </div>
+
+        <button class="btn" onclick="startBroadcasting()">Comenzar Captura</button>
+        
+        <div class="footer">
+            Powered by VDO.Ninja Engine | San Bernardino Tournament 2026
+        </div>
+    </div>
+
+    <script>
+        function startBroadcasting() {
+            const name = document.getElementById('playerName').value;
+            if (!name) {
+                alert("Por favor, escribe tu nombre primero.");
+                return;
+            }
             
-            window.location.href = url;
+            // CONFIGURACIÓN PERSONALIZADA
+            const baseUrl = "https://vdo.ninja/";
+            const params = new URLSearchParams({
+                push: name,             // Identificador del jugador
+                autostart: true,       // Inicia solo
+                bitrate: 5000,         // 5Mbps para buena calidad 1080p
+                quality: 0,            // 0 es la mejor calidad
+                speed: 1,              // Baja latencia
+                clean: true,           // Quita logos de VDO.Ninja
+                webcam: 0              // Desactiva webcam, prioriza pantalla
+            });
+
+            window.location.href = `${baseUrl}?${params.toString()}`;
         }
-    </script>  
+    </script>
 </body>
 </html>
